@@ -16,6 +16,7 @@ from pathlib import Path
 CORS_ALLOW_ALL_ORIGINS = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+Template_DIR = BASE_DIR / "template/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'agvs',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'agv1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [Template_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,8 +74,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'agv1.wsgi.application'
-
+# WSGI_APPLICATION = 'agv1.wsgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.DatabaseLayer',
+        'CONFIG': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'agv',
+            'PASSWORD': '123456hadz',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        },
+        'ROUTING': 'agv1.routing.channel_routing',  # Thay thế bằng đường dẫn tới module routing của bạn
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -134,3 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MQTT_SERVER = '192.168.0.200'
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
+
+ASGI_APPLICATION = 'agv1.asgi.application'
