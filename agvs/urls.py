@@ -4,7 +4,7 @@ from . import views
 
 router = DefaultRouter()
  
-router.register('post', views.AgvDataViewSet, basename="post" )
+router.register('agv_data', views.AgvDataViewSet, basename="agv_data" )
 
 urlpatterns = [
     path("", view=views.index),

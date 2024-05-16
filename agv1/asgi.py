@@ -1,10 +1,10 @@
 """
-ASGI config for agv1 project.
+ASGI config for src project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
+https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 """
 
 import os
@@ -21,8 +21,5 @@ application = get_asgi_application()
 
 application = ProtocolTypeRouter({
     "http": application,
-    "websocket": URLRouter(
-        websocket_urlpatterns
-        # # you can define all your routers here
-    ),
+    "websocket": URLRouter(websocket_urlpatterns),
 })

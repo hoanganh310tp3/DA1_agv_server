@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Agv_data, Agv_identify, STATUS
+from .models import Agv_identify, Agv_data
 
 
-class AgvIndentifySerializer(serializers.ModelSerializer):
+class AgvIdentifySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Agv_identify
@@ -10,12 +10,9 @@ class AgvIndentifySerializer(serializers.ModelSerializer):
  
 class AgvDataserializer(serializers.ModelSerializer):
     
-    status = serializers.SerializerMethodField()
+    agv_identify = AgvIdentifySerializer()
     
     class Meta:
         model = Agv_data
         fields = "__all__"
-    
-    def get_status(self, obj):
-        return STATUS[obj.status][1]
     

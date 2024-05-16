@@ -11,12 +11,18 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+import socket
+
+def get_current_ipv4():
+    return socket.gethostbyname(socket.gethostname())
+
+
 
 
 CORS_ALLOW_ALL_ORIGINS = True
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-Template_DIR = BASE_DIR / "template/"
+Template_DIR = BASE_DIR / "templates/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -39,10 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'corsheaders',
     'rest_framework',
     'agvs',
-    'channels'
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -74,21 +81,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'agv1.wsgi.application'
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.DatabaseLayer',
-        'CONFIG': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'agv',
-            'PASSWORD': '123456hadz',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        },
-        'ROUTING': 'agv1.routing.channel_routing',  # Thay thế bằng đường dẫn tới module routing của bạn
-    },
-}
+ASGI_APPLICATION = 'agv1.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -96,14 +90,26 @@ CHANNEL_LAYERS = {
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': 'postgres',
+'NAME': 'agv_database_1',
 'USER': 'agv',
 'PASSWORD': '123456hadz',
 'HOST': 'localhost',
 'PORT': '5432',
-}
+},
 }
 
+# real-time data
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)], 
+        },
+    },
+}
+#
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -133,6 +139,8 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
@@ -146,8 +154,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MQTT_SERVER = '192.168.0.200'
+MQTT_SERVER = get_current_ipv4()
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 
-ASGI_APPLICATION = 'agv1.asgi.application'
+ASGI_APPLICATION = 'agv1.routing.application'

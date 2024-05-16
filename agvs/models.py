@@ -1,37 +1,31 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MinValueValidator
 
-STATUS = (
-    (0, "Draft"),
-    (1, "Publish"),
-    (2, "Archive"),
-)
+
 
 class Agv_identify(models.Model):
     verhicle_id = models.AutoField(primary_key=True )  
-    verhicle_model = models.IntegerField(default=" ")
+    verhicle_model = models.IntegerField(default=0)
     guidance = models.CharField(max_length=100, default=" ")  
     is_active = models.BooleanField(default=False)  
     is_connected = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.verhicle_id
+        return f'Vehicle ID: {self.verhicle_id}'
 
 class Agv_data(models.Model):
-    Agv_id = models.ForeignKey(Agv_identify, on_delete=models.CASCADE, related_name='Agv_data')
-    Agv_speed = models.FloatField()
-    trip_distance = models.FloatField()
-    Agv_battery = models.FloatField()
-    Agv_distance = models.FloatField()
-    previous_node = models.IntegerField()
-    next_node = models.IntegerField()
-    status = models.IntegerField(choices=STATUS, default=0)
+    data_id = models.BigAutoField(primary_key=True) 
+    agv_identify = models.ForeignKey(Agv_identify, on_delete=models.CASCADE)
+    Agv_speed = models.FloatField(validators=[MinValueValidator(0.0)])
+    trip_distance = models.FloatField(validators=[MinValueValidator(0.0)])
+    Agv_battery = models.FloatField(validators=[MinValueValidator(0.0)])
+    Agv_distance = models.FloatField(validators=[MinValueValidator(0.0)])
+    previous_node = models.IntegerField(validators=[MinValueValidator(0)])
+    next_node = models.IntegerField(validators=[MinValueValidator(0)])
     
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    def __str__(self):
-        return self.Agv_id
 
+    def __str__(self):
+        return f'Data ID: {self.data_id}'
 
     
