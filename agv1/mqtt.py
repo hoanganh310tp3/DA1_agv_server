@@ -1,5 +1,10 @@
 import paho.mqtt.client as mqtt
 from django.conf import settings
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "agv1.settings")
+django.setup()
 
 def subcribe():
     client.subscribe("AGV_Data/#")

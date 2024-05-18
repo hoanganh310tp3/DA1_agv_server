@@ -3,7 +3,7 @@ from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.mixins import ListModelMixin
 from djangochannelsrestframework.observer import model_observer
 
-from .models import Post
+from .models import Agv_data
 from .serializers import AgvDataserializer
 
 

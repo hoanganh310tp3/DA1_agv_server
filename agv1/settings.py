@@ -68,7 +68,9 @@ ROOT_URLCONF = 'agv1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [Template_DIR],
+        'DIRS': [
+            BASE_DIR.joinpath('templates')
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,8 +83,8 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'agv1.asgi.application'
 
+ASGI_APPLICATION = 'agv1.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -158,4 +160,4 @@ MQTT_SERVER = get_current_ipv4()
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 
-ASGI_APPLICATION = 'agv1.routing.application'
+WSGI_APPLICATION = 'agv1.wsgi.application'
