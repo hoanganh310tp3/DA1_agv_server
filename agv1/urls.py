@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 from agvs import views
 
+
 urlpatterns = [
+    path("api/",include('users.urls')),
     path("", include("agvs.urls")),
     path('admin/', admin.site.urls),
     re_path(r'^api/agvs/$', views.agvs_list),

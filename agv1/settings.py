@@ -36,6 +36,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'agvs',
     'channels',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +163,7 @@ MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
 
 WSGI_APPLICATION = 'agv1.wsgi.application'
+AUTH_USER_MODEL = 'users.User'
+CORS_ALLOW_CREDENTIALS = True
+
+

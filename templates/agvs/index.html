@@ -81,8 +81,10 @@
           };
         },
       });
+      
+      var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzE2MjY5Mzk5LCJpYXQiOjE3MTYyNjU3OTl9.hNUu1vZtfQ2isNpAHykPxDw1L5mNNFdgrt7fxfxQz6s";  // Lấy token từ nơi nó được lưu trữ
+      var ws = new WebSocket('ws://localhost:8000/ws/?token=' + token);
 
-      var ws = new WebSocket("ws://localhost:8000/ws/");
 
       ws.onopen = function (e) {
         ws.send(

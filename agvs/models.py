@@ -28,4 +28,5 @@ class Agv_data(models.Model):
     def __str__(self):
         return f'Data ID: {self.data_id}'
 
-    
+
+ 
