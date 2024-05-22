@@ -1,1 +1,45 @@
 uvicorn agv1.asgi:application --host 127.0.0.1 --port 8000 --lifespan off
+# postman for websocket test
+{
+    "action": "create",
+    "request_id": 1,
+    "data": {
+        "agv_identify": 1,
+        "Agv_speed": 2.5,
+        "trip_distance": 10.2,
+        "Agv_battery": 80.0,
+        "Agv_distance": 15.7,
+        "previous_node": 123,
+        "next_node": 456
+    },
+    "list": [
+        {
+            "agv_identify": 2,
+            "Agv_speed": 3.0,
+            "trip_distance": 12.5,
+            "Agv_battery": 70.0,
+            "Agv_distance": 18.9,
+            "previous_node": 456,
+            "next_node": 789
+        },
+        {
+            "agv_identify": 3,
+            "Agv_speed": 2.0,
+            "trip_distance": 8.7,
+            "Agv_battery": 90.0,
+            "Agv_distance": 11.2,
+            "previous_node": 789,
+            "next_node": 101
+        }
+    ]
+}
+# postman for Restful Api test 
+{
+   "verhicle_id": "1",
+   "verhicle_model": "1", 
+   "guidance": "h",
+   "is_active": true,
+   "is_connected": true
+}
+# ws url with token:
+ws://localhost:8000/ws/?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNzE2MjY5Mzk5LCJpYXQiOjE3MTYyNjU3OTl9.hNUu1vZtfQ2isNpAHykPxDw1L5mNNFdgrt7fxfxQz6s
