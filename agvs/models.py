@@ -13,6 +13,8 @@ class Agv_identify(models.Model):
 
     def __str__(self):
         return f'Vehicle ID: {self.verhicle_id}'
+    
+
 
 class Agv_data(models.Model):
     data_id = models.BigAutoField(primary_key=True) 
@@ -26,7 +28,7 @@ class Agv_data(models.Model):
     
 
     def __str__(self):
-        return f'Data ID: {self.data_id}'
+        return "Data ID: {ID}".format(ID = self.data_id)
 
 
  

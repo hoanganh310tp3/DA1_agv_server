@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework import viewsets
 
@@ -10,6 +11,7 @@ from .serializers import AgvIdentifySerializer, AgvDataserializer
 
 # For Agv_identify restfulapi
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def agvs_list(request):
     if request.method == 'GET':
         data = Agv_identify.objects.all()
@@ -27,6 +29,7 @@ def agvs_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT', 'DELETE'])
+@permission_classes([AllowAny])
 def agvs_detail(request, pk):
     try:
         agv = Agv_identify.objects.get(pk=pk)
@@ -51,6 +54,7 @@ class AgvDataViewSet(viewsets.ModelViewSet):
     
     serializer_class = AgvDataserializer
     queryset = Agv_data.objects.all()
+    permission_classes = [AllowAny]
     
 def index(request):
     return render(request, "agvs/index.html")
